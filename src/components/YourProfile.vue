@@ -19,17 +19,17 @@
             <div style="flex: 1;">
               <label for="photo">Your photo (Recommended size 200px)</label>
               <div style="display: flex; margin-top: 8px;">
-                <img src="https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg" alt="User profile picture." style="height: 80px; width: 80px; border-radius: 50%; margin-right: 16px;">
+                <img :src="this.imageUrl" alt="User profile picture." style="height: 80px; width: 80px; border-radius: 50%; margin-right: 16px;">
                 <div style="flex: 1; background-color: #F7F5FC; border-radius: 4px; display: flex; justify-content: center; align-items: center;">
                   <div style="background-color: white; margin: 7px 0px; border: 1px solid #D9D2E7; border-radius: 4px;">
-                    <input :disabled="success" id="photo" type="file" style="padding: 8px 16px; border: 1px solid #B2A6C9; border-radius: 4px; margin-left: 16px; display: none;">
+                    <input :disabled="success" @change="onImageChange" id="photo" type="file" style="padding: 8px 16px; border: 1px solid #B2A6C9; border-radius: 4px; margin-left: 16px; display: none;">
                     <label for="photo" style="cursor: pointer; margin: 7px 15px; line-height: 26px; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 14px;">Upload new image</label>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div style="cursor: pointer; line-height: 27px; color: #E0004D; font-weight: 600;">
+          <div @click="defaultImage" style="cursor: pointer; line-height: 27px; color: #E0004D; font-weight: 600;">
             Remove existing image
           </div>
         </div>
@@ -62,6 +62,7 @@ export default {
         last_name: false,
         email_address: false,
       },
+      imageUrl: 'https://lh3.googleusercontent.com/proxy/rMWAzn7UtoaLiLjXSvXK4wEv8VpXeUE-ff9tyHO0qIwJU4_mWCtl1nnmFt0rHzsJtlc25tiFdU8HobnYU9iqvgDheHPAiIyOOXv_Hj5Vx7l2ygN9JcMOJhRdvmN0x2bpU6LwwYERvA2o',
       success: false,
     }
   },
@@ -80,6 +81,14 @@ export default {
     },
   },
   methods: {
+    defaultImage() {
+      this.imageUrl = 'https://lh3.googleusercontent.com/proxy/rMWAzn7UtoaLiLjXSvXK4wEv8VpXeUE-ff9tyHO0qIwJU4_mWCtl1nnmFt0rHzsJtlc25tiFdU8HobnYU9iqvgDheHPAiIyOOXv_Hj5Vx7l2ygN9JcMOJhRdvmN0x2bpU6LwwYERvA2o';
+    },
+    onImageChange(e) {
+      const file = e.target.files[0];
+      this.imageUrl = URL.createObjectURL(file);
+      e.target.value = '';
+    },
     checkForm(e) {
       e.preventDefault();
 
